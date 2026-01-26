@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Cemil Dikili Oyun Portalı</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <style>
+        body { font-family: sans-serif; background: #1a1a1a; color: white; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; }
+        h1 { color: #f1c40f; margin-bottom: 30px; }
+        .game-card { background: #333; padding: 20px; margin: 10px; border-radius: 15px; width: 80%; max-width: 300px; text-decoration: none; color: white; border: 2px solid #444; transition: 0.3s; }
+        .game-card:active { background: #444; transform: scale(0.95); }
+        .game-card h2 { margin: 0; font-size: 1.2rem; }
+        .footer { margin-top: 40px; font-size: 0.8rem; color: #888; }
+    </style>
+</head>
+<body>
+    <h1>Oyunlarım</h1>
+    
+    <a href="https://acdikili.github.io/BlackJACK/" class="game-card">
+        <h2>BlackJACK 4x4</h2>
+    </a>
+
+    <a href="https://acdikili.github.io/BlackJACKPoT/" class="game-card">
+        <h2>BlackJACK PoT</h2>
+    </a>
+
+    <div class="footer">Cemil Dikili © 2026</div>
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js');
+        }
+    </script>
+</body>
+</html>
