@@ -1,6 +1,6 @@
 {
-  "name": "Cemil Dikili Oyunlar",
-  "short_name": "Oyunlarım",
+  "name": "ACDgames Portal",
+  "short_name": "ACDgames",
   "start_url": "index.html",
   "display": "standalone",
   "background_color": "#1a1a1a",
