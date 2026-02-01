@@ -11,26 +11,61 @@
     <style>
         body { font-family: sans-serif; background: #1a1a1a; color: white; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; }
         h1 { color: #f1c40f; margin-bottom: 30px; }
-        .game-card { background: #333; padding: 20px; margin: 10px; border-radius: 15px; width: 80%; max-width: 300px; text-decoration: none; color: white; border: 2px solid #444; transition: 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+        
+        /* Buton Stilleri */
+        .game-card { background: #333; padding: 20px; margin: 10px; border-radius: 15px; width: 80%; max-width: 300px; text-decoration: none; color: white; border: 2px solid #444; transition: 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.5); cursor: pointer; display: block; }
         .game-card:active { background: #444; transform: scale(0.95); }
         .game-card h2 { margin: 0; font-size: 1.2rem; }
+        
+        /* Kurallar Ekranı İçin Ek Stiller */
+        #kurallar-ekrani { display: none; flex-direction: column; align-items: center; justify-content: center; }
+        .status { margin: 20px 0; font-style: italic; color: #ccc; }
+        .devam-btn { background: #f1c40f; color: black; padding: 15px 40px; border-radius: 10px; text-decoration: none; font-weight: bold; font-size: 1.1rem; margin-top: 20px; }
+
         .footer { margin-top: 40px; font-size: 0.85rem; color: #f1c40f; font-weight: bold; letter-spacing: 1px; }
     </style>
 </head>
 <body>
-    <h1>ACDgames</h1>
-    
-    <a href="https://acdikili.github.io/BlackJACK/" class="game-card">
-        <h2>BlackJACK 4x4</h2>
-    </a>
 
-    <a href="https://acdikili.github.io/BlackJACKPoT/" class="game-card">
-        <h2>BlackJACK PoT</h2>
-    </a>
+    <div id="ana-ekran">
+        <h1>ACDgames</h1>
+        
+        <div class="game-card" onclick="kurallariGoster('BlackJACK 4x4', 'https://acdikili.github.io/BlackJACK/')">
+            <h2>BlackJACK 4x4</h2>
+        </div>
+
+        <div class="game-card" onclick="kurallariGoster('BlackJACK PoT', 'https://acdikili.github.io/BlackJACKPoT/')">
+            <h2>BlackJACK PoT</h2>
+        </div>
+
+        <div class="game-card" onclick="kurallariGoster('Tavuk ve Yumurtaları', 'https://acdikili.github.io/TAVUK-Yumurtalari/')">
+            <h2>Tavuk ve Yumurtaları</h2>
+        </div>
+    </div>
+
+    <div id="kurallar-ekrani">
+        <div class="game-card" style="cursor: default;">
+            <h2 id="secilenOyun">Oyun Adı</h2>
+        </div>
+        <h1>KURALLAR</h1>
+        <div class="status">(.) YAPIM AŞAMASINDA</div>
+        <br>
+        <a href="#" id="devamLinki" class="devam-btn">DEVAM</a>
+    </div>
 
     <div class="footer">AC.DIKILI & GEMINI.AI (c) 2026 - 2050</div>
 
     <script>
+        function kurallariGoster(ad, link) {
+            // Ana ekranı gizle, Kurallar ekranını aç
+            document.getElementById('ana-ekran').style.display = 'none';
+            document.getElementById('kurallar-ekrani').style.display = 'flex';
+            
+            // Bilgileri yerleştir
+            document.getElementById('secilenOyun').innerText = ad;
+            document.getElementById('devamLinki').href = link;
+        }
+
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('sw.js');
         }
