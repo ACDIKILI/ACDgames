@@ -48,7 +48,7 @@
                     'Maça: x4 | Kupa: x3 | Sinek: x2 | Karo: x1',
                     '21 Bonus: +50 | 20 Bonus: +20',
                     '21 olan bölgeler otomatik kilitlenir.',
-                    'Dilediğiniz an bölgeye basarak kart gelişini siz de durdurabilirsiniz.'
+                    'Dilediğiniz an bölgeye basarak kart gelişini durdurabilirsiniz.'
                 ]
             },
             'bjpot': {
@@ -56,7 +56,7 @@
                 link: 'https://acdikili.github.io/BlackJACKPoT/',
                 kurallar: [
                     'Maça 4x, Kupa 3x, Sinek 2x, Karo 1x puanlama.',
-                    'Düşen kartın sağına ve soluna tıklayarak kartı hareket ettirebilme.',
+                    'Düşen kartın sağına ve soluna tıklayarak hareket ettirebilme.',
                     'Hareket eden kartlar, düşerken bulundukları sütuna göre simge değiştirir.'
                 ]
             },
@@ -66,9 +66,9 @@
                 kurallar: [
                     'Değişik renk, puan ve ağırlıkta yumurtalar.',
                     '100 puan = 1 Altın otomatik dönüşümü.',
-                    'Halkadan geçen yumurtaların puanları artar. SARI 2x, YEŞİL 3x, KIRMIZI 5x.',
-                    'Alt taraftaki ilk 3 bölge SOLA, sağa yakın ilk 3 bölge SAĞA hareketi sağlar.',
-                    '20 Altına 2xHIZ ve/veya 2xPUAN bonuslarını alma imkanı.'
+                    'Halkadan geçen yumurtaların puanları artar: SARI 2x, YEŞİL 3x, KIRMIZI 5x.',
+                    'Alt taraftaki ilk 3 bölge SOLA, sağdaki ilk 3 bölge SAĞA hareket sağlar.',
+                    '20 Altına 2xHIZ ve/veya 2xPUAN bonusları alma imkanı.'
                 ]
             },
             'carkifelek': {
@@ -76,18 +76,18 @@
                 link: 'https://acdikili.github.io/CARKIFELEK-Klasik/', 
                 kurallar: [
                     'Oyun MOD unu Bireysel veya Çoklu olarak seçiniz.',
-                    'Çoklu MOD da 1 ile 5 arasında oyuncu sayısını belirleyiniz. Seçim yapılmazsa 1 oyuncu kabul edilir.',
-                    'Çoklu oyun MOD unda skorlar DÜNYA Skorlarına ilave edilmez.',
+                    'Çoklu MOD da 1-5 arası oyuncu seçilebilir. Seçim yapılmazsa 1 oyuncu atanır.',
+                    'Çoklu oyun MOD unda skorlar DÜNYA SKORLARINA ilave edilmez.',
                     'Tur sayısını 1 ile 10 aralığında belirleyebilirsiniz.',
-                    'Tur sayısı kadar oyun oynandığında elde edilen toplam skor Dünya Skorlarına eklenir.',
-                    'İflas Dünya Skorlarını etkilemez.'
+                    'Tur sayısı kadar oyun sonunda toplam skor DÜNYA SKORLARINA eklenir.',
+                    'İflas gelmesi Dünya Skorlarını etkilemez.'
                 ]
             }
         };
 
         function kurallariGoster(anahtar) {
             const veri = oyunVerileri[anahtar];
-            aktifOyunLink = veri.link; // Linki hafızaya al
+            aktifOyunLink = veri.link;
             document.getElementById('ana-ekran').style.display = 'none';
             document.getElementById('kurallar-ekrani').style.display = 'flex';
             document.getElementById('baslikOyun').innerText = veri.ad;
@@ -97,9 +97,9 @@
 
         function oyunuBaslat(e) {
             e.preventDefault();
-            // PoT'un giriş hatasını çözmek için linke benzersiz bir zaman ekliyoruz (Cache temizliği)
-            const forceLink = aktifOyunLink + "?t=" + new Date().getTime();
-            window.location.href = forceLink;
+            // Firebase çakışmalarını ve 'Bağlantı Hatası'nı önlemek için benzersiz zaman parametresi
+            const forceFreshLink = aktifOyunLink + "?v=" + new Date().getTime();
+            window.location.href = forceFreshLink;
         }
     </script>
 </body>
