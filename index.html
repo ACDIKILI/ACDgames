@@ -7,49 +7,90 @@
     <style>
         body { font-family: sans-serif; background: #1a1a1a; color: white; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; margin: 0; padding: 20px; box-sizing: border-box; }
         h1 { color: #f1c40f; margin-bottom: 20px; }
-        .game-card { background: #333; padding: 20px; margin: 10px; border-radius: 15px; width: 85%; max-width: 320px; text-decoration: none; color: white; border: 2px solid #444; transition: 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.5); display: block; }
+        .game-card { background: #333; padding: 20px; margin: 10px; border-radius: 15px; width: 85%; max-width: 320px; text-decoration: none; color: white; border: 2px solid #444; transition: 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.5); cursor: pointer; }
         .game-card:active { background: #444; transform: scale(0.95); }
         .game-card h2 { margin: 0; font-size: 1.2rem; }
+        #kurallar-ekrani { display: none; flex-direction: column; align-items: center; width: 100%; max-width: 350px; }
+        .kural-liste { text-align: left; background: #222; padding: 15px; border-radius: 10px; border: 1px solid #444; margin: 15px 0; width: 100%; font-size: 0.95rem; line-height: 1.6; }
+        .kural-item { margin-bottom: 10px; display: flex; align-items: flex-start; }
+        .kural-item span { color: #f1c40f; margin-right: 8px; font-weight: bold; }
+        .devam-btn { background: #f1c40f; color: black; padding: 15px 45px; border-radius: 10px; text-decoration: none; font-weight: bold; font-size: 1.1rem; margin-top: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); display: inline-block; }
         .footer { margin-top: 30px; font-size: 0.8rem; color: #f1c40f; font-weight: bold; }
     </style>
 </head>
 <body>
 
-    <h1>ACDgames</h1>
-    
-    <a href="?oyun=bj4x4" class="game-card"><h2>BlackJACK 4x4</h2></a>
-    <a href="?oyun=bjpot" class="game-card"><h2>BlackJACK PoT</h2></a>
-    <a href="?oyun=tavuk" class="game-card"><h2>Tavuk ve Yumurtaları</h2></a>
-    <a href="?oyun=carkifelek" class="game-card"><h2>ÇARKIFELEK-Klasik</h2></a>
+    <div id="ana-ekran">
+        <h1>ACDgames</h1>
+        <div class="game-card" onclick="kurallariGoster('bj4x4')"><h2>BlackJACK 4x4</h2></div>
+        <div class="game-card" onclick="kurallariGoster('bjpot')"><h2>BlackJACK PoT</h2></div>
+        <div class="game-card" onclick="kurallariGoster('tavuk')"><h2>Tavuk ve Yumurtaları</h2></div>
+        <div class="game-card" onclick="kurallariGoster('carkifelek')"><h2>ÇARKIFELEK-Klasik</h2></div>
+    </div>
+
+    <div id="kurallar-ekrani">
+        <div class="game-card" style="cursor: default;"><h2 id="baslikOyun"></h2></div>
+        <h1>KURALLAR</h1>
+        <div id="icerikKurallar" class="kural-liste"></div>
+        <a href="#" id="linkDevam" class="devam-btn">DEVAM</a>
+    </div>
 
     <div class="footer">AC.DIKILI & GEMINI.AI (c) 2026 - 2050</div>
 
     <script>
-        // URL'de bir oyun seçilmiş mi kontrol et
-        const params = new URLSearchParams(window.location.search);
-        const secilenOyun = params.get('oyun');
-
         const oyunVerileri = {
-            'bj4x4': { ad: 'BlackJACK 4x4', link: 'https://acdikili.github.io/BlackJACK/', kurallar: ['Maça: x4 | Kupa: x3 | Sinek: x2 | Karo: x1', '21 Bonus: +50 | 20 Bonus: +20', '21 olan bölgeler otomatik kilitlenir.', 'Dilediğiniz an bölgeye basarak kart gelişini siz de durdurabilirsiniz.'] },
-            'bjpot': { ad: 'BlackJACK PoT', link: 'https://acdikili.github.io/BlackJACKPoT/', kurallar: ['Maça 4x, Kupa 3x, Sinek 2x, Karo 1x puanlama.', 'Düşen kartın sağına ve soluna tıklayarak kartı hareket ettirin.', 'Hareket eden kartlar, düştükleri sütuna göre simge değiştirir.'] },
-            'tavuk': { ad: 'Tavuk ve Yumurtaları', link: 'https://acdikili.github.io/TAVUK-Yumurtalari/', kurallar: ['Değişik renk, puan ve ağırlıkta yumurtalar.', '100 puan = 1 Altın otomatik dönüşümü.', 'Halkadan geçen yumurtaların puanları artar: SARI 2x, YEŞİL 3x, KIRMIZI 5x.', 'Alt taraftaki ilk 3 bölge SOLA, sağdaki ilk 3 bölge SAĞA hareket sağlar.', '20 Altına 2xHIZ ve/veya 2xPUAN bonusu alabilirsiniz.'] },
-            'carkifelek': { ad: 'ÇARKIFELEK Klasik', link: 'https://acdikili.github.io/CARKIFELEK-Klasik/', kurallar: ['Oyun MOD unu Bireysel veya Çoklu olarak seçiniz.', 'Çoklu MOD da 1 ile 5 arasında oyuncu sayısını belirleyiniz.', 'Çoklu oyun MOD unda skorlar DÜNYA Skorlarına ilave edilmez.', 'Tur sayısını 1 ile 10 aralığında belirleyebilirsiniz.', 'Tur sayısı kadar oyun oynandığında elde edilen toplam skor Dünya Skorlarına eklenir.', 'İflas Dünya Skorlarını etkilemez.'] }
+            'bj4x4': {
+                ad: 'BlackJACK 4x4',
+                link: 'https://acdikili.github.io/BlackJACK/',
+                kurallar: [
+                    'Maça: x4 | Kupa: x3 | Sinek: x2 | Karo: x1',
+                    '21 Bonus: +50 | 20 Bonus: +20',
+                    '21 olan bölgeler otomatik kilitlenir.',
+                    'Dilediğiniz an bölgeye basarak kart gelişini siz de durdurabilirsiniz.'
+                ]
+            },
+            'bjpot': {
+                ad: 'BlackJACK PoT',
+                link: 'https://acdikili.github.io/BlackJACKPoT/',
+                kurallar: [
+                    'Maça 4x, Kupa 3x, Sinek 2x, Karo 1x puanlama.',
+                    'Düşen kartın sağına ve soluna tıklayarak kartı hareket ettirebilme.',
+                    'Hareket eden kartlar, düşerken bulundukları sütuna göre simge değiştirir.'
+                ]
+            },
+            'tavuk': {
+                ad: 'Tavuk ve Yumurtaları',
+                link: 'https://acdikili.github.io/TAVUK-Yumurtalari/',
+                kurallar: [
+                    'Değişik renk, puan ve ağırlıkta yumurtalar.',
+                    '100 puan = 1 Altın otomatik dönüşümü.',
+                    'Halkadan geçen yumurtaların puanları artar. SARI 2x, YEŞİL 3x, KIRMIZI 5x.',
+                    'Alt taraftaki ilk 3 bölge SOLA, sağa yakın ilk 3 bölge SAĞA hareketi sağlar.',
+                    '20 Altına 2xHIZ ve/veya 2xPUAN bonuslarını alma imkanı.'
+                ]
+            },
+            'carkifelek': {
+                ad: 'ÇARKIFELEK-Klasik',
+                link: 'https://acdikili.github.io/CARKIFELEK-Klasik/', 
+                kurallar: [
+                    'Oyun MOD unu Bireysel veya Çoklu olarak seçiniz.',
+                    'Çoklu MOD da 1 ile 5 arasında oyuncu sayısını belirleyiniz. Seçim yapılmazsa 1 oyuncu kabul edilir.',
+                    'Çoklu oyun MOD unda skorlar DÜNYA Skorlarına ilave edilmez.',
+                    'Tur sayısını 1 ile 10 aralığında belirleyebilirsiniz.',
+                    'Tur sayısı kadar oyun oynandığında elde edilen toplam skor Dünya Skorlarına eklenir.',
+                    'İflas Dünya Skorlarını etkilemez.'
+                ]
+            }
         };
 
-        if (secilenOyun && oyunVerileri[secilenOyun]) {
-            const veri = oyunVerileri[secilenOyun];
-            // Sayfa içeriğini tamamen temizle ve sadece Kurallar ekranını bas
-            document.body.innerHTML = `
-                <div class="game-card" style="margin: 20px auto; cursor: default;"><h2>${veri.ad}</h2></div>
-                <h1 style="color: #f1c40f;">KURALLAR</h1>
-                <div style="text-align: left; background: #222; padding: 15px; border-radius: 10px; border: 1px solid #444; margin: 15px auto; width: 85%; max-width: 350px; font-size: 0.95rem; line-height: 1.6;">
-                    ${veri.kurallar.map(k => `<div style="margin-bottom: 10px; display: flex;"><span style="color: #f1c40f; margin-right: 8px; font-weight: bold;">(.)</span> ${k}</div>`).join('')}
-                </div>
-                <a href="${veri.link}" style="background: #f1c40f; color: black; padding: 15px 45px; border-radius: 10px; text-decoration: none; font-weight: bold; font-size: 1.1rem; margin-top: 10px; display: inline-block;">DEVAM</a>
-                <br><br>
-                <a href="index.html" style="color: #ccc; text-decoration: none; font-size: 0.8rem;">← Geri Dön</a>
-                <div class="footer">AC.DIKILI & GEMINI.AI (c) 2026 - 2050</div>
-            `;
+        function kurallariGoster(anahtar) {
+            const veri = oyunVerileri[anahtar];
+            document.getElementById('ana-ekran').style.display = 'none';
+            document.getElementById('kurallar-ekrani').style.display = 'flex';
+            document.getElementById('baslikOyun').innerText = veri.ad;
+            document.getElementById('linkDevam').href = veri.link;
+            const liste = document.getElementById('icerikKurallar');
+            liste.innerHTML = veri.kurallar.map(k => `<div class="kural-item"><span>(.)</span> ${k}</div>`).join('');
         }
     </script>
 </body>
