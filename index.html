@@ -32,12 +32,14 @@
         <div class="game-card" style="cursor: default;"><h2 id="baslikOyun"></h2></div>
         <h1>KURALLAR</h1>
         <div id="icerikKurallar" class="kural-liste"></div>
-        <a href="#" id="linkDevam" class="devam-btn">DEVAM</a>
+        <a href="#" id="linkDevam" class="devam-btn" onclick="oyunuBaslat(event)">DEVAM</a>
     </div>
 
     <div class="footer">AC.DIKILI & GEMINI.AI (c) 2026 - 2050</div>
 
     <script>
+        let aktifOyunLink = "";
+
         const oyunVerileri = {
             'bj4x4': {
                 ad: 'BlackJACK 4x4',
@@ -85,12 +87,19 @@
 
         function kurallariGoster(anahtar) {
             const veri = oyunVerileri[anahtar];
+            aktifOyunLink = veri.link; // Linki hafızaya al
             document.getElementById('ana-ekran').style.display = 'none';
             document.getElementById('kurallar-ekrani').style.display = 'flex';
             document.getElementById('baslikOyun').innerText = veri.ad;
-            document.getElementById('linkDevam').href = veri.link;
             const liste = document.getElementById('icerikKurallar');
             liste.innerHTML = veri.kurallar.map(k => `<div class="kural-item"><span>(.)</span> ${k}</div>`).join('');
+        }
+
+        function oyunuBaslat(e) {
+            e.preventDefault();
+            // PoT'un giriş hatasını çözmek için linke benzersiz bir zaman ekliyoruz (Cache temizliği)
+            const forceLink = aktifOyunLink + "?t=" + new Date().getTime();
+            window.location.href = forceLink;
         }
     </script>
 </body>
