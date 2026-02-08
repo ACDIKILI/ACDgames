@@ -25,7 +25,7 @@
         <div class="game-card" onclick="kurallariGoster('bjpot')"><h2>BlackJACK PoT</h2></div>
         <div class="game-card" onclick="kurallariGoster('tavuk')"><h2>Tavuk ve Yumurtaları</h2></div>
         <div class="game-card" onclick="kurallariGoster('carkifelek')"><h2>ÇARKIFELEK-Klasik</h2></div>
-        <div class="game-card" onclick="kurallariGoster('carkifelek_kelime')"><h2>ÇARKIFELEK-Kelimeler</h2></div>
+        <div class="game-card" onclick="kurallariGoster('kelime_oyunu')"><h2>ÇARKIFELEK-Kelimeler</h2></div>
     </div>
 
     <div id="kurallar-ekrani">
@@ -40,19 +40,35 @@
     <script>
         let aktifOyunLink = "";
         const oyunVerileri = {
-            'bj4x4': { ad: 'BlackJACK 4x4', link: 'https://acdikili.github.io/BlackJACK/', kurallar: ['Maça: x4 | Kupa: x3 | Sinek: x2 | Karo: x1', '21 Bonus: +50 | 20 Bonus: +20', '21 olan bölgeler kilitlenir.', 'Bölgeye basarak kart gelişini durdurabilirsiniz.'] },
-            'bjpot': { ad: 'BlackJACK PoT', link: 'https://acdikili.github.io/BlackJACKPoT/', kurallar: ['Maça 4x, Kupa 3x, Sinek 2x, Karo 1x puanlama.', 'Düşen kartın sağına ve soluna tıklayarak hareket ettirebilirsiniz.', 'Kartlar düştükleri sütuna göre simge değiştirir.'] },
-            'tavuk': { ad: 'Tavuk ve Yumurtaları', link: 'https://acdikili.github.io/TAVUK-Yumurtalari/', kurallar: ['100 puan = 1 Altın otomatik dönüşümü.', 'Halkadan geçen yumurtalar: SARI 2x, YEŞİL 3x, KIRMIZI 5x.', 'Soldaki ilk 3 bölge SOLA, sağdaki ilk 3 bölge SAĞA hareket sağlar.', '20 Altına bonus alabilirsiniz.'] },
-            'carkifelek': { ad: 'ÇARKIFELEK-Klasik', link: 'https://acdikili.github.io/CARKIFELEK-Klasik/', kurallar: ['MOD u Bireysel veya Çoklu seçiniz.', 'Çoklu MOD da 1-5 arası oyuncu seçilebilir.', 'Çoklu modda skorlar Dünya Skorlarına eklenmez.', 'Tur sayısı kadar oyun sonunda toplam skor kaydedilir.', 'İflas Dünya Skorlarını etkilemez.'] },
-            'carkifelek_kelime': { 
+            'bj4x4': { 
+                ad: 'BlackJACK 4x4', 
+                link: 'https://acdikili.github.io/BlackJACK/', 
+                kurallar: ['Maça: x4 | Kupa: x3 | Sinek: x2 | Karo: x1', '21 Bonus: +50 | 20 Bonus: +20', '21 olan bölgeler kilitlenir.', 'Bölgeye basarak kart gelişini durdurabilirsiniz.'] 
+            },
+            'bjpot': { 
+                ad: 'BlackJACK PoT', 
+                link: 'https://acdikili.github.io/BlackJACKPoT/', 
+                kurallar: ['Maça 4x, Kupa 3x, Sinek 2x, Karo 1x puanlama.', 'Düşen kartın sağına ve soluna tıklayarak hareket ettirebilirsiniz.', 'Kartlar düştükleri sütuna göre simge değiştirir.'] 
+            },
+            'tavuk': { 
+                ad: 'Tavuk ve Yumurtaları', 
+                link: 'https://acdikili.github.io/TAVUK-Yumurtalari/', 
+                kurallar: ['100 puan = 1 Altın otomatik dönüşümü.', 'Halkadan geçen yumurtalar: SARI 2x, YEŞİL 3x, KIRMIZI 5x.', 'Soldaki ilk 3 bölge SOLA, sağdaki ilk 3 bölge SAĞA hareket sağlar.', '20 Altına bonus alabilirsiniz.'] 
+            },
+            'carkifelek': { 
+                ad: 'ÇARKIFELEK-Klasik', 
+                link: 'https://acdikili.github.io/CARKIFELEK-Klasik/', 
+                kurallar: ['MOD u Bireysel veya Çoklu seçiniz.', 'Çoklu MOD da 1-5 arası oyuncu seçilebilir.', 'Çoklu modda skorlar Dünya Skorlarına eklenmez.', 'Tur sayısı kadar oyun sonunda toplam skor kaydedilir.', 'İflas Dünya Skorlarını etkilemez.'] 
+            },
+            'kelime_oyunu': { 
                 ad: 'ÇARKIFELEK-Kelimeler', 
                 link: 'https://acdikili.github.io/CARKIFELEK-Kelimeler/', 
                 kurallar: [
-                    'BAS tuşuyla ÇARK çevrilir. 3-7 harf uzunluğunda, 12 ayrı kategoride puan belirlenir.',
+                    'BAS tuşuyla ÇARK çevrilir. 3-7 harf uzunluğunda, 12 ayrı kategoride PUAN belirlenir.',
                     'Devam etmek için OK tuşuna basın veya ÇARKI tekrar çevirin.',
-                    'Puan; harf sayısına, çark puanına ve kelimeyi bulma hızınıza göre belirlenir.',
-                    'Her kelime için harf sayısına bağlı tahmin sayısı ve süre belirlenir.',
-                    'Tahmin etmek istediğinizde BULDUM tuşuna basın. Yanlış harfe basmadan tahmininizi yazın.',
+                    'Puan; harf sayısına, çark puanına ve bulma hızınıza göre belirlenir.',
+                    'Harf sayısına bağlı olarak tahmin sayısı ve SÜRE belirlenir.',
+                    'Tahmin için BULDUM tuşuna basın ve yanlış harfe basmadan yazın.',
                     '3 harfli kelimeler arşivinde KISALTMALAR da yer almaktadır.'
                 ] 
             }
@@ -70,6 +86,7 @@
 
         function oyunuBaslat(e) { 
             e.preventDefault(); 
+            // Tüm oyunların rekorlarını ve Firebase bağlantılarını taze tutan 'Cache Buster'
             const forceFreshLink = aktifOyunLink + "?v=" + new Date().getTime(); 
             window.location.href = forceFreshLink; 
         }
