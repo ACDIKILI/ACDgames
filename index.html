@@ -25,24 +25,54 @@
         <div class="game-card" onclick="kurallariGoster('bjpot')"><h2>BlackJACK PoT</h2></div>
         <div class="game-card" onclick="kurallariGoster('tavuk')"><h2>Tavuk ve Yumurtaları</h2></div>
         <div class="game-card" onclick="kurallariGoster('carkifelek')"><h2>ÇARKIFELEK-Klasik</h2></div>
+        <div class="game-card" onclick="kurallariGoster('carkifelek_kelime')"><h2>ÇARKIFELEK-Kelimeler</h2></div>
     </div>
+
     <div id="kurallar-ekrani">
         <div class="game-card" style="cursor: default;"><h2 id="baslikOyun"></h2></div>
         <h1>KURALLAR</h1>
         <div id="icerikKurallar" class="kural-liste"></div>
         <a href="#" id="linkDevam" class="devam-btn" onclick="oyunuBaslat(event)">DEVAM</a>
     </div>
+
     <div class="footer">AC.DIKILI & GEMINI.AI (c) 2026 - 2050</div>
+
     <script>
         let aktifOyunLink = "";
         const oyunVerileri = {
             'bj4x4': { ad: 'BlackJACK 4x4', link: 'https://acdikili.github.io/BlackJACK/', kurallar: ['Maça: x4 | Kupa: x3 | Sinek: x2 | Karo: x1', '21 Bonus: +50 | 20 Bonus: +20', '21 olan bölgeler kilitlenir.', 'Bölgeye basarak kart gelişini durdurabilirsiniz.'] },
             'bjpot': { ad: 'BlackJACK PoT', link: 'https://acdikili.github.io/BlackJACKPoT/', kurallar: ['Maça 4x, Kupa 3x, Sinek 2x, Karo 1x puanlama.', 'Düşen kartın sağına ve soluna tıklayarak hareket ettirebilirsiniz.', 'Kartlar düştükleri sütuna göre simge değiştirir.'] },
             'tavuk': { ad: 'Tavuk ve Yumurtaları', link: 'https://acdikili.github.io/TAVUK-Yumurtalari/', kurallar: ['100 puan = 1 Altın otomatik dönüşümü.', 'Halkadan geçen yumurtalar: SARI 2x, YEŞİL 3x, KIRMIZI 5x.', 'Soldaki ilk 3 bölge SOLA, sağdaki ilk 3 bölge SAĞA hareket sağlar.', '20 Altına bonus alabilirsiniz.'] },
-            'carkifelek': { ad: 'ÇARKIFELEK-Klasik', link: 'https://acdikili.github.io/CARKIFELEK-Klasik/', kurallar: ['MOD u Bireysel veya Çoklu seçiniz.', 'Çoklu MOD da 1-5 arası oyuncu seçilebilir.', 'Çoklu modda skorlar Dünya Skorlarına eklenmez.', 'Tur sayısı kadar oyun sonunda toplam skor kaydedilir.', 'İflas Dünya Skorlarını etkilemez.'] }
+            'carkifelek': { ad: 'ÇARKIFELEK-Klasik', link: 'https://acdikili.github.io/CARKIFELEK-Klasik/', kurallar: ['MOD u Bireysel veya Çoklu seçiniz.', 'Çoklu MOD da 1-5 arası oyuncu seçilebilir.', 'Çoklu modda skorlar Dünya Skorlarına eklenmez.', 'Tur sayısı kadar oyun sonunda toplam skor kaydedilir.', 'İflas Dünya Skorlarını etkilemez.'] },
+            'carkifelek_kelime': { 
+                ad: 'ÇARKIFELEK-Kelimeler', 
+                link: 'https://acdikili.github.io/CARKIFELEK-Kelimeler/', 
+                kurallar: [
+                    'BAS tuşuyla ÇARK çevrilir. 3-7 harf uzunluğunda, 12 ayrı kategoride puan belirlenir.',
+                    'Devam etmek için OK tuşuna basın veya ÇARKI tekrar çevirin.',
+                    'Puan; harf sayısına, çark puanına ve kelimeyi bulma hızınıza göre belirlenir.',
+                    'Her kelime için harf sayısına bağlı tahmin sayısı ve süre belirlenir.',
+                    'Tahmin etmek istediğinizde BULDUM tuşuna basın. Yanlış harfe basmadan tahmininizi yazın.',
+                    '3 harfli kelimeler arşivinde KISALTMALAR da yer almaktadır.'
+                ] 
+            }
         };
-        function kurallariGoster(anahtar) { const veri = oyunVerileri[anahtar]; aktifOyunLink = veri.link; document.getElementById('ana-ekran').style.display = 'none'; document.getElementById('kurallar-ekrani').style.display = 'flex'; document.getElementById('baslikOyun').innerText = veri.ad; const liste = document.getElementById('icerikKurallar'); liste.innerHTML = veri.kurallar.map(k => `<div class="kural-item"><span>(.)</span> ${k}</div>`).join(''); }
-        function oyunuBaslat(e) { e.preventDefault(); const forceFreshLink = aktifOyunLink + "?v=" + new Date().getTime(); window.location.href = forceFreshLink; }
+
+        function kurallariGoster(anahtar) { 
+            const veri = oyunVerileri[anahtar]; 
+            aktifOyunLink = veri.link; 
+            document.getElementById('ana-ekran').style.display = 'none'; 
+            document.getElementById('kurallar-ekrani').style.display = 'flex'; 
+            document.getElementById('baslikOyun').innerText = veri.ad; 
+            const liste = document.getElementById('icerikKurallar'); 
+            liste.innerHTML = veri.kurallar.map(k => `<div class="kural-item"><span>(.)</span> ${k}</div>`).join(''); 
+        }
+
+        function oyunuBaslat(e) { 
+            e.preventDefault(); 
+            const forceFreshLink = aktifOyunLink + "?v=" + new Date().getTime(); 
+            window.location.href = forceFreshLink; 
+        }
     </script>
 </body>
 </html>
